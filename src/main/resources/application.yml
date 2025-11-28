@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: spring-auth-api
+    config:
+        import:
+            - classpath:application-database.yml
