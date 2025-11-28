@@ -1,6 +1,7 @@
 package com.manoel.springauthapi.dto;
 
 import com.manoel.springauthapi.enums.Role;
+import com.manoel.springauthapi.validation.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class UserRegisterRequest {
     private String email;
 
     @NotBlank(message = "Password cannot be blank")
+    @ValidPassword
     private String password;
 
     private Role role;

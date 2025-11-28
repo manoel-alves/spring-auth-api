@@ -1,5 +1,6 @@
 package com.manoel.springauthapi.service;
 
+import com.manoel.springauthapi.dto.UserChangePasswordRequest;
 import com.manoel.springauthapi.dto.UserRegisterRequest;
 import com.manoel.springauthapi.dto.UserUpdateRequest;
 import com.manoel.springauthapi.entity.User;
@@ -71,20 +72,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void changePassword(Long id, String oldPassword, String newPassword){
+    public void changePassword(Long id, UserChangePasswordRequest request){
         User user = userRepository
                 .findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if  (!passwordEncoder.matches(oldPassword, user.getPassword())){
+        if  (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
             throw new InvalidPasswordException("Invalid password");
         }
 
-        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
-
-
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
