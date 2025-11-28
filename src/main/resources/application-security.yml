@@ -1,5 +1,5 @@
 security:
     password:
         minLength: 6
-        regex: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&, ])[A-Za-z\d.@$!%*?&, ]{6,}$"
+        regex: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&, ])[A-Za-z\d.@$!%*?&, ]{6,}$'
         message: "Password must contain at least one uppercase, one lowercase, one number and one special character"
