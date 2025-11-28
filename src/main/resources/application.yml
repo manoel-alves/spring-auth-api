@@ -1,6 +1,9 @@
 spring:
     application:
         name: spring-auth-api
+    messages:
+        basename: i18n/messages
+        encoding: UTF-8
     config:
         import:
             - classpath:application-security.yml

@@ -26,7 +26,7 @@ public class UserService {
 
     public User register(UserRegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())){
-            throw new EmailAlreadyRegisteredException("Email already registered");
+            throw new EmailAlreadyRegisteredException();
         }
 
         User user = new User();
@@ -40,10 +40,10 @@ public class UserService {
     public User login (String email, String rawPassword){
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(rawPassword, user.getPassword())){
-            throw new InvalidPasswordException("Invalid password");
+            throw new InvalidPasswordException();
         }
 
         return user;
@@ -60,7 +60,7 @@ public class UserService {
     public User updateUser(Long id, UserUpdateRequest request){
         User user = userRepository
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         if (request.getEmail() != null) {
             user.setEmail(request.getEmail());
@@ -75,10 +75,10 @@ public class UserService {
     public void changePassword(Long id, UserChangePasswordRequest request){
         User user = userRepository
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
 
         if  (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
-            throw new InvalidPasswordException("Invalid password");
+            throw new InvalidPasswordException();
         }
 
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
@@ -87,7 +87,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException();
         }
 
         userRepository.deleteById(id);
