@@ -3,4 +3,5 @@ spring:
         name: spring-auth-api
     config:
         import:
+            - classpath:application-security.yml
             - classpath:application-database.yml
